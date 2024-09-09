@@ -3,15 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ExampleResource\Pages;
-use App\Filament\Resources\ExampleResource\RelationManagers;
 use App\Models\Example;
-use Filament\Forms;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ExampleResource extends Resource
 {
@@ -23,7 +22,10 @@ class ExampleResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Repeater::make('comments')
+                    ->simple(
+                        TextInput::make('comment'),
+                    ),
             ]);
     }
 
@@ -31,7 +33,7 @@ class ExampleResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('comments')->searchable()->sortable(),
             ])
             ->filters([
                 //
